@@ -27,7 +27,7 @@ super + c
 super + v
 	$TERMINAL -e nvim -c VimwikiIndex
 super + shift + a
-	$TERMINAL -e alsamixer; pkill -RTMIN+10 $STATUSBAR
+	$TERMINAL -e pulsemixer; pkill -RTMIN+10 $STATUSBAR
 super + shift + c
 	mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --title='mpvfloat' /dev/video0
 super + shift + e
@@ -36,6 +36,8 @@ super + w
 	$TERMINAL -e sudo nmtui
 super + shift + w
 	$BROWSER
+super + i 
+	htop
 
 # Et cetera...
 super + grave
@@ -59,9 +61,11 @@ XF86TouchpadToggle
 XF86Touchpad{Off,On}
 	synclient TouchpadOff={1,0}
 XF86MonBrightnessDown
-	xbacklight -dec 15
+	light -U 10
+#	xbacklight -dec 15
 XF86MonBrightnessUp
-	xbacklight -inc 15
+	light -A 10
+#	xbacklight -inc 15
 
 # Recording
 # Take screenshot
@@ -89,10 +93,12 @@ super + shift + less
 	mpc seek 0%
 # Seek foward in song
 super + {_,shift +} bracketright
-	mpc seek +{10,120}
+	playerctl position +{10,120}
+#	mpc seek +{10,120}
 # Seek backward in song
 super + {_,shift +} bracketleft
-	mpc seek -{10,120}
+	playerctl position -{10,120}
+#	mpc seek -{10,120}
 # Increase volume
 super {_,shift +} + plus
 	amixer sset Master {5,15}%+; pkill -RTMIN+10 $STATUSBAR
@@ -108,11 +114,14 @@ XF86AudioMute
 XF86Audio{Raise,Lower}Volume
 	amixer sset Master 5%{+,-}; pkill -RTMIN+10 $STATUSBAR
 XF86Audio{Next,Prev}
-	mpc {next,prev}
+	playerctl {next, previous}
+#	mpc {next,prev}
 XF86Audio{Pause,Play,Stop}
-	mpc {pause,play,stop}
+	playerctl {pause,play,stop}
+#	mpc {pause,play,stop}
 XF86Audio{Rewind,Forward}
-	mpc seek {-,+}10
+	playerctl position {-,+}10
+#	mpc seek {-,+}10
 XF86AudioRecord
 	dmenurecord
 XF86AudioMedia
